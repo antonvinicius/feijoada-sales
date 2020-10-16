@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+}
+
+body, input, a, button {
+    font-family: 'Encode Sans Expanded', sans-serif;
+}
+
+body {
+    background-color: #ddd;
+}
+
+html, body {
+    overflow-x: hidden;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 95%;
+}
