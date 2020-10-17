@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Title } from '../TitleElement'
 import { animateScroll } from 'react-scroll'
 import { Button } from '../ButtonElement'
@@ -13,7 +13,7 @@ import {
 } from './FormElements'
 
 
-export default function Index() {
+export default function Form() {
     const intialValues = { email: "", name: "", phone: "" }
     const [formValues, setFormValues] = useState(intialValues)
     const [formErrors, setFormErrors] = useState({})

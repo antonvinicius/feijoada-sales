@@ -1,14 +1,13 @@
 import styled from "styled-components"
 
 export const Button = styled.button`
-    margin-top: 50px;
+    margin-top: 10px;
     margin-bottom: ${({mb}) => mb ? mb + 'px' : '0'};
     color: ${({theme}) => theme === 'green' ? "black" : '#fff'};
     border-radius: 36px;
     padding: 10px 40px;
     font-weight: 800;
     text-align: center;
-    outline: none;
     cursor: pointer;
     border: none;
     background-color: ${({theme}) => theme === 'green' ? "#65D470" : '#D07756'};

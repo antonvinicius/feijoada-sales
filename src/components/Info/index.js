@@ -16,7 +16,7 @@ import { Title } from '../TitleElement'
 export default function index() {
     return (
         <InfoContainer name="info">
-            <Title>Informações</Title>
+            <Title id="title">Informações</Title>
             <CardInfo>
                 <CardIconPrice />
                 <CardTitle>Preço</CardTitle>

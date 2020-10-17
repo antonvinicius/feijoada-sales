@@ -12,8 +12,8 @@ body {
     background-color: #ddd;
 }
 
-html, body {
-    overflow-x: hidden;
+html,body,#root {
+    height: 100%;
 }
 
 form {

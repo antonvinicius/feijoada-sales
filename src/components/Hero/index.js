@@ -34,7 +34,7 @@ export default function index() {
                         <HeroP>Transformando o mundo! Uma vida de cada vez.</HeroP>
                     </HeroMessage>
                     <Link to="info" spy={true} smooth={true} offset={40} duration={500}>
-                        <Button>Saiba Mais</Button>
+                        <Button mb={50}>Saiba Mais</Button>
                     </Link>
                 </HeroWrapper>
             </HeroContainer>

@@ -1,15 +1,10 @@
 import React from 'react';
-
-import Hero from './components/Hero'
-import Info from './components/Info'
-import Form from './components/Form'
+import Routes from './routes';
 
 function App() {
   return (
     <>
-      <Hero />
-      <Info />
-      <Form />
+      <Routes />
     </>
   );
 }

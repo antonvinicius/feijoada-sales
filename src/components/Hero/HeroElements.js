@@ -9,9 +9,14 @@ export const HeroContainer = styled.header`
     -o-background-size: cover;
     background-size: cover;
     height: 100vh;
+    position:relative;
 
     @media(orientation: landscape) and (max-width: 768px) {
         height: 100% !important;
+    }
+
+    @media(min-width: 768px){
+        background-attachment: fixed;
     }
 `
 
@@ -40,6 +45,11 @@ export const HeroWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @media(min-width: 768px) {
+        max-width: 800px;
+        margin: auto;
+    }
 `
 
 export const HeroMessage = styled.div`
@@ -52,8 +62,17 @@ export const HeroMessage = styled.div`
 `
 export const HeroH1 = styled.h1`
     font-size: 20px;
+
+    @media(min-width: 768px){
+        font-size: 30px;
+    }
 `
 export const HeroP = styled.p`
     padding: 5px;
     font-size: 15px;
+
+    @media(min-width: 768px){
+        padding: 10px;
+        font-size: 22px;
+    }
 `

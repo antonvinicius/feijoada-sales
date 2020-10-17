@@ -12,6 +12,9 @@ export const FormContainer = styled.div`
     align-items: center;
     width:100%;
     margin: auto;
+    @media(min-width: 768px){
+        height: 100vh;
+    }
 `
 export const FormWrap = styled.div`
     background-color: #fff;
@@ -21,6 +24,9 @@ export const FormWrap = styled.div`
     align-items: center;
     border-radius: 33px;
     width: 80%;
+    @media(min-width: 768px){
+        width: 500px;
+    }
 `
 export const Message = styled.p`
     background-color: #EECCBF;
