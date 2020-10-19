@@ -47,7 +47,6 @@ export default function Form() {
     };
 
     const handleSubmit = (e) => {
-        setLoading(true)
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmitting(true);
@@ -60,6 +59,7 @@ export default function Form() {
     }, [formErrors]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const submitForm = async () => {
+        setLoading(true)
         const file = new GoogleSpreadsheet(sheetId);
         await file.useServiceAccountAuth({
             client_email: credentials.client_email,
