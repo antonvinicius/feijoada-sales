@@ -12,14 +12,13 @@ import {
     FormInput
 } from './FormElements'
 
-const { GoogleSpreadsheet } = require('google-spreadsheet');
 const credentials = require('../../credentials.json')
+const { GoogleSpreadsheet } = require('google-spreadsheet');
 const authEmail = process.env.REACT_APP_AUTH_EMAIL
 const sheetId = process.env.REACT_APP_SHEET_ID
 const keyDev = process.env.REACT_APP_KEY
 const keyProd = process.env.REACT_APP_KEY_PROD
-const urlDev = `https://ws.sandbox.pagseguro.uol.com.br/v2/checkout?email=${authEmail}&token=${keyDev}`// eslint-disable-next-line
-const urlProd = `https://ws.pagseguro.uol.com.br/v2/checkout?email=${authEmail}&token=${keyProd}` 
+const urlPagSeguro = process.env.NODE_ENV === 'development' ? `https://ws.sandbox.pagseguro.uol.com.br/v2/checkout?email=${authEmail}&token=${keyDev}` : `https://ws.pagseguro.uol.com.br/v2/checkout?email=${authEmail}&token=${keyProd}` 
 
 export default function Form() {
     const intialValues = { email: "", name: "", phone: "" }
@@ -95,7 +94,7 @@ export default function Form() {
         }
         const formBody = Object.keys(objForm).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(objForm[key])).join('&');
         console.log(formBody)
-        await fetch(urlDev, {
+        await fetch(urlPagSeguro, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -105,7 +104,8 @@ export default function Form() {
         .then(res => res.text())
         .then(res => {
             let codeCheckoutPagSeguro = getJustCode(res)[0]
-            window.location.href = `https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=${codeCheckoutPagSeguro}`//PROD RETIRAR SANDBOX
+            let url = process.env.NODE_ENV === 'development' ? `https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=${codeCheckoutPagSeguro}` : `https://pagseguro.uol.com.br/v2/checkout/payment.html?code=${codeCheckoutPagSeguro}`
+            window.location.href = url
         })
 
         setLoading(false)
