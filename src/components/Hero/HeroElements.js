@@ -69,7 +69,7 @@ export const HeroH1 = styled.h1`
 `
 export const HeroP = styled.p`
     padding: 5px;
-    font-size: 13px;
+    font-size: 11px;
 
     @media(min-width: 768px){
         padding: 10px;
