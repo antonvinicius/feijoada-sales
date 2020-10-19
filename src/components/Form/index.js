@@ -94,7 +94,7 @@ export default function Form() {
         }
         const formBody = Object.keys(objForm).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(objForm[key])).join('&');
         console.log(formBody)
-        await fetch(urlPagSeguro, {
+        await fetch('https://cors-anywhere.herokuapp.com/' + urlPagSeguro, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
