@@ -14,7 +14,12 @@ import {
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const credentials = require('../../credentials.json')
-const sheetId = '1hY0KnZVY-U6B3_Egf7ayr3W3ehjpOg0vrQWnP1ss1Jc'
+const authEmail = process.env.REACT_APP_AUTH_EMAIL
+const sheetId = process.env.REACT_APP_SHEET_ID
+const keyDev = process.env.REACT_APP_KEY
+const keyProd = process.env.REACT_APP_KEY_PROD
+const urlDev = `https://ws.sandbox.pagseguro.uol.com.br/v2/checkout?email=${authEmail}&token=${keyDev}`// eslint-disable-next-line
+const urlProd = `https://ws.pagseguro.uol.com.br/v2/checkout?email=${authEmail}&token=${keyProd}` 
 
 export default function Form() {
     const intialValues = { email: "", name: "", phone: "" }
@@ -60,6 +65,7 @@ export default function Form() {
 
     const submitForm = async () => {
         setLoading(true)
+        const date = new Date()
         const file = new GoogleSpreadsheet(sheetId);
         await file.useServiceAccountAuth({
             client_email: credentials.client_email,
@@ -71,10 +77,43 @@ export default function Form() {
             Nome: `${formValues.name}`,
             Email: `${formValues.email}`,
             Telefone: `${formValues.phone}`,
-            Data: new Date(),
+            Data: date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' Hora: ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
         });
+
+        const objForm = {
+            currency: 'BRL',
+            itemId1: '1',
+            itemDescription1: 'Feijoada',
+            itemAmount1: '30.00',
+            itemQuantity1: '1',
+            itemWeight1: '1000',
+            shippingAddressRequired: 'false',
+            timeout: '20',
+            senderName: formValues.name,
+            senderEmail: formValues.email,
+            redirectURL: 'https://feijoada.netlify.app/obrigado'
+        }
+        const formBody = Object.keys(objForm).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(objForm[key])).join('&');
+        console.log(formBody)
+        await fetch(urlDev, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formBody
+        })
+        .then(res => res.text())
+        .then(res => {
+            let codeCheckoutPagSeguro = getJustCode(res)[0]
+            window.location.href = `https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=${codeCheckoutPagSeguro}`//PROD RETIRAR SANDBOX
+        })
+
         setLoading(false)
-        window.location.href = 'https://pag.ae/7WuDVFQB2'
+    }
+
+    function getJustCode(text) { // eslint-disable-next-line
+        const regex = /(?<=(<code>))(\w|\d|\n|[().,\-:;@#$%^&*\[\]"'+–/\/®°⁰!?{}|`~]| )+?(?=(<\/code>))/g
+        return regex.exec(text)
     }
 
     return (
@@ -83,7 +122,7 @@ export default function Form() {
             <FormWrap name="formSection">
                 <Message>Para realizar a compra da feijoada, faça seu cadastro.</Message>
                 <form id="form" onSubmit={handleSubmit}>
-                    <div style={{width: "100%", height: "100%", display: "flex", justifyContent: "center"}}>
+                    <div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center" }}>
                         {loading ? <div className="sweet-loading">
                             <Loader
                                 size={150}
