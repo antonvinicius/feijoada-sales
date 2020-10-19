@@ -55,7 +55,7 @@ export default function Form() {
         if (Object.keys(formErrors).length === 0 && isSubmitting) {
             submitForm();
         }
-    }, [formErrors]);
+    }, [formErrors]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const submitForm = async () => {
         const file = new GoogleSpreadsheet(sheetId);
