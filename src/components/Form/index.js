@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Title } from '../TitleElement'
-import { animateScroll } from 'react-scroll'
 import { Button } from '../ButtonElement'
 import MaskedInput from 'react-text-mask'
+import Loader from 'react-spinners/FadeLoader'
 
 import {
     FormContainer,
@@ -21,6 +21,7 @@ export default function Form() {
     const [formValues, setFormValues] = useState(intialValues)
     const [formErrors, setFormErrors] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -46,6 +47,7 @@ export default function Form() {
     };
 
     const handleSubmit = (e) => {
+        setLoading(true)
         e.preventDefault();
         setFormErrors(validate(formValues));
         setIsSubmitting(true);
@@ -71,8 +73,8 @@ export default function Form() {
             Telefone: `${formValues.phone}`,
             Data: new Date(),
         });
-        window.open('https://pag.ae/7WuDVFQB2', '_blank');
-        animateScroll.scrollToTop()
+        setLoading(false)
+        window.location.href = 'https://pag.ae/7WuDVFQB2'
     }
 
     return (
@@ -81,6 +83,15 @@ export default function Form() {
             <FormWrap name="formSection">
                 <Message>Para realizar a compra da feijoada, faça seu cadastro.</Message>
                 <form id="form" onSubmit={handleSubmit}>
+                    <div style={{width: "100%", height: "100%", display: "flex", justifyContent: "center"}}>
+                        {loading ? <div className="sweet-loading">
+                            <Loader
+                                size={150}
+                                color={"#1BB99A"}
+                                loading={loading}
+                            />
+                        </div> : null}
+                    </div>
                     {formErrors.name && (
                         <span style={{ color: 'red' }}>{formErrors.name}</span>
                     )}
