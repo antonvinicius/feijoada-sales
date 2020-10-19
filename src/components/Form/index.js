@@ -12,6 +12,9 @@ import {
     FormInput
 } from './FormElements'
 
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+const credentials = require('../../credentials.json')
+const sheetId = '1hY0KnZVY-U6B3_Egf7ayr3W3ehjpOg0vrQWnP1ss1Jc'
 
 export default function Form() {
     const intialValues = { email: "", name: "", phone: "" }
@@ -54,11 +57,20 @@ export default function Form() {
         }
     }, [formErrors]);
 
-    const submitForm = () => {
-        fetch(`https://hooks.zapier.com/hooks/catch/8742077/ogjuytj/`, {
-            method: 'POST',
-            body: JSON.stringify(formValues),
-        })
+    const submitForm = async () => {
+        const file = new GoogleSpreadsheet(sheetId);
+        await file.useServiceAccountAuth({
+            client_email: credentials.client_email,
+            private_key: credentials.private_key,
+        });
+        await file.loadInfo();
+        const sheet = file.sheetsByIndex[0];
+        await sheet.addRow({
+            Nome: `${formValues.name}`,
+            Email: `${formValues.email}`,
+            Telefone: `${formValues.phone}`,
+            Data: new Date(),
+        });
         window.open('https://pag.ae/7WuDVFQB2', '_blank');
         animateScroll.scrollToTop()
     }
@@ -70,7 +82,7 @@ export default function Form() {
                 <Message>Para realizar a compra da feijoada, faça seu cadastro.</Message>
                 <form id="form" onSubmit={handleSubmit}>
                     {formErrors.name && (
-                        <span style={{color: 'red'}}>{formErrors.name}</span>
+                        <span style={{ color: 'red' }}>{formErrors.name}</span>
                     )}
                     <FormLabel>Nome*</FormLabel>
                     <FormInput
@@ -80,7 +92,7 @@ export default function Form() {
                         onChange={handleChange}
                     />
                     {formErrors.email && (
-                        <span style={{color: 'red'}}>{formErrors.email}</span>
+                        <span style={{ color: 'red' }}>{formErrors.email}</span>
                     )}
                     <FormLabel>Email*</FormLabel>
                     <FormInput
@@ -90,7 +102,7 @@ export default function Form() {
                         onChange={handleChange}
                     />
                     {formErrors.phone && (
-                        <span style={{color: 'red'}}>{formErrors.phone}</span>
+                        <span style={{ color: 'red' }}>{formErrors.phone}</span>
                     )}
                     <FormLabel>Celular*</FormLabel>
                     <MaskedInput
