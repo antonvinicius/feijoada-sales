@@ -23,4 +23,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/credentials.json
+/src/credentials.json
+
+# Local Netlify folder
+.netlify

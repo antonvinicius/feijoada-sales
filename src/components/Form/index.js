@@ -12,7 +12,7 @@ import {
     FormInput
 } from './FormElements'
 
-const credentials = require('../../../credentials.json')
+const credentials = require('../../credentials.json')
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const authEmail = process.env.REACT_APP_AUTH_EMAIL
 const sheetId = process.env.REACT_APP_SHEET_ID
