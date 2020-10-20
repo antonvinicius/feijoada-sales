@@ -22,6 +22,8 @@ const urlPagSeguro = process.env.NODE_ENV === 'development' ? `https://ws.sandbo
 
 export default function Form() {
     const intialValues = { email: "", name: "", phone: "" }
+    const MAX_QUANTITY = 25
+    const [quantity, setQuantity] = useState(1)
     const [formValues, setFormValues] = useState(intialValues)
     const [formErrors, setFormErrors] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -86,7 +88,7 @@ export default function Form() {
             itemId1: '1',
             itemDescription1: 'Feijoada',
             itemAmount1: '30.00',
-            itemQuantity1: '1',
+            itemQuantity1: quantity,
             itemWeight1: '1000',
             shippingAddressRequired: 'false',
             timeout: '20',
@@ -118,6 +120,9 @@ export default function Form() {
         return regex.exec(text)
     }
 
+    let options = []
+    for(let i = 1; i <= MAX_QUANTITY; i++)
+        options.push(<option value={i}>{i}</option>)
     return (
         <FormContainer>
             <Title size={20}>Preencha Seus Dados</Title>
@@ -174,6 +179,10 @@ export default function Form() {
                         value={formValues.phone}
                         onChange={handleChange}
                     />
+                    <FormLabel>Quantidade de Feijoadas*</FormLabel>
+                    <select value={formValues.quantity} onChange={e => setQuantity(e.target.value)} style={{width: '100%', padding: '5px'}}>
+                        {options}
+                    </select>
                 </form>
             </FormWrap>
             <Button theme={"green"} mb={40} form="form">Comprar</Button>
