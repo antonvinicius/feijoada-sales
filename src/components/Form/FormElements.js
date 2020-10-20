@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import Bg from '../../assets/img/ImgForm.svg'
+import Bg from '../../assets/img/form.jpg'
 
 export const FormContainer = styled.div`
     background-image: url(${Bg});

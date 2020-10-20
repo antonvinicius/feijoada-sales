@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { FaMoneyBillAlt, FaCalendarCheck } from 'react-icons/fa'
-import BgDesktop from '../../assets/img/ImgDesktopFrame2.svg'
+import BgDesktop from '../../assets/img/info.jpg'
 
 export const InfoContainer = styled.div`
     background-image: url(${BgDesktop}); 
