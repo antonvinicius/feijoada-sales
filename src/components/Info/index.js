@@ -25,7 +25,7 @@ export default function index() {
             </CardInfo>
             <CardInfo>
                 <CardIconDate />
-                <CardTitle>Data</CardTitle>
+                <CardTitle>Data e Local</CardTitle>
                 <CardMain>31/10</CardMain>
                 <CardSubTitle>Rua Clara Nunes, 5856</CardSubTitle>
             </CardInfo>
