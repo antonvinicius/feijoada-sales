@@ -44,8 +44,9 @@ export default function Form() {
         }
         if (!values.name)
             errors.name = "Não pode estar em branco"
-        else if (values.name.split(' ').length === 1)
+        else if (values.name.split(' ').length === 1 || values.name.split(' ')[1].length === 0){
             errors.name = "Informe nome e sobrenome"
+        }
         if (!values.phone) {
             errors.phone = 'Não pode estar em branco'
         } else if (values.phone.length < 16) {
