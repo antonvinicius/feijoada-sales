@@ -107,22 +107,21 @@ export default function Form() {
         })
         .then(res => res.text())
         .then(res => {
-            let codeCheckoutPagSeguro = getJustCode(res)[0]
+            let codeCheckoutPagSeguro = getJustCode(res)
             let url = process.env.NODE_ENV === 'development' ? `https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=${codeCheckoutPagSeguro}` : `https://pagseguro.uol.com.br/v2/checkout/payment.html?code=${codeCheckoutPagSeguro}`
             window.location.href = url
         })
 
         setLoading(false)
     }
-
     function getJustCode(text) { // eslint-disable-next-line
-        const regex = /(?<=(<code>))(\w|\d|\n|[().,\-:;@#$%^&*\[\]"'+–/\/®°⁰!?{}|`~]| )+?(?=(<\/code>))/g
-        return regex.exec(text)
-    }
+        const regex = /<code>(.*?)<\/code>/g
 
+        return regex.exec(text)[0].toString().replace(/<\/?code>/g, '')
+    }
     let options = []
     for(let i = 1; i <= MAX_QUANTITY; i++)
-        options.push(<option value={i}>{i}</option>)
+        options.push(<option key={i} value={i}>{i}</option>)
     return (
         <FormContainer>
             <Title size={20}>Preencha Seus Dados</Title>
